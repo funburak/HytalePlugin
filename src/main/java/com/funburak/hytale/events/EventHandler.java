@@ -1,7 +1,8 @@
 package com.funburak.hytale.events;
 
 import com.hypixel.hytale.server.core.Message;
-import com.hypixel.hytale.server.core.event.events.player.PlayerConnectEvent;
+import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.util.EventTitleUtil;
 
 public class EventHandler {
@@ -11,9 +12,11 @@ public class EventHandler {
      *
      * @param event
      */
-    public static void onPlayerConnect(PlayerConnectEvent event) {
-        EventTitleUtil.showEventTitleToPlayer(event.getPlayerRef(),
-                Message.raw(event.getPlayerRef().getUsername()),
+    public static void onPlayerReady(PlayerReadyEvent event) {
+        PlayerRef playerRef = event.getPlayerRef().getStore().getComponent(event.getPlayerRef(), PlayerRef.getComponentType());
+        assert playerRef != null;
+        EventTitleUtil.showEventTitleToPlayer(playerRef,
+                Message.raw(event.getPlayer().getDisplayName()),
                 Message.raw("Welcome"),
                 false);
     }
